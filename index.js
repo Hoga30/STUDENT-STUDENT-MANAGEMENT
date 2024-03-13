@@ -11,7 +11,7 @@ app.post("/student/add",async(req,res)=>{
     try{
 const addedStudent = await StudentModel.create(req.body)
 res.status(201).json({
-mesage: "Student added!",
+message: "Student added!",
 student: addedStudent})
 
 } catch(err){
