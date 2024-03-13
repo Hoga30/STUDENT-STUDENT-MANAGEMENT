@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
-import StudentModel from './models/student.model.js';
+import StudentModel from './models/student.models.js';
 
 const app = express();
 const port = process.env.PORT || 6000;
@@ -56,7 +56,36 @@ app.get("/student/list", async(req, res)=> {
         });
     }
 });
-
+app.put('/student/:nationalId', async (req, res) => {
+    const { fullName, email } = req.body;
+    try {
+      const updatedUser = await User.findByIdAndUpdate(
+        req.params.nationalId,
+        { fullName, email },
+        { new: true }
+      );
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+      res.json(updatedUser);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error.' });
+    }
+  });
+  app.delete('/student/:id', async (req, res) => {
+    try {
+      const deletedUser = await student.findByIdAndDelete(req.params.nationalId);
+      if (!deletedUser) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+      res.json({ message: 'User deleted successfully.' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error.' });
+    }
+  });
+  
 mongoose.connect(db_connection_string)
 .then(() => {
     console.log("Connected to DB...");
