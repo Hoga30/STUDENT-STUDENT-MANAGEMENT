@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import StudentModel from './models/student.model.js';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 6000;
 const db_connection_string = process.env.MONGODB_URI;
 
 app.use(express.json());
